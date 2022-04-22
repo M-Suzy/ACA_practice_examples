@@ -1,10 +1,21 @@
 package model;
 
-public class Employee {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "employeeXML")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Employee  {
+    @XmlElement
     private String firstName;
+    @XmlElement
     private String lastName;
+    @XmlElement
     private int age;
 
+    Employee(){}
     public Employee(String firstName, String lastName, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
