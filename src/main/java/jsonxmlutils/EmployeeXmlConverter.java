@@ -21,7 +21,7 @@ public class EmployeeXmlConverter {
             e.printStackTrace();
         }
 
-         /*
+
         try {
             jaxbContext = JAXBContext.newInstance(Employee.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
@@ -29,7 +29,7 @@ public class EmployeeXmlConverter {
             System.out.println(employee.toString());
         } catch (JAXBException e) {
             e.printStackTrace();
-        }*/
+        }
 
     }
 }
