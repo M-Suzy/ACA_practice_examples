@@ -1,6 +1,8 @@
 package hibernateexample.enitities;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "employee", uniqueConstraints = {
@@ -24,6 +26,17 @@ public class Employee {
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private Contract contract;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id",
+            foreignKey = @ForeignKey(name = "department_employee_fk"))
+    private Department department;
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "employee_project",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id"))
+    private Set<Project> projects = new HashSet<>();
 
     public Employee(){}
 
@@ -61,5 +74,13 @@ public class Employee {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public Department getDepartment() {
+        return department;
     }
 }
