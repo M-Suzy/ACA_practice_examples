@@ -13,10 +13,14 @@ public class Department {
     @Column(name = "department_name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "department", cascade = CascadeType.PERSIST)
     private List<Employee> employees = new ArrayList<>();
 
     public Department() {
+    }
+
+    public Department(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -33,6 +37,11 @@ public class Department {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void addEmployee(Employee employee){
+        employee.setDepartment(this);
+        employees.add(employee);
     }
 
     @Override

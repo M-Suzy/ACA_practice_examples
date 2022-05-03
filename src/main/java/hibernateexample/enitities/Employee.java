@@ -8,17 +8,17 @@ import java.util.Set;
 @Table(name = "employee", uniqueConstraints = {
         @UniqueConstraint(columnNames = "SSN",
                              name = "SSN_UK")})
-public class Employee {
+public class Employee{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name="ssn", length = 50,
+    @Column(name="ssn", length = 15,
             nullable = false, unique = true)
     private String SSN;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name", length = 10, nullable = false)
     private String firstName;
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name", length = 15, nullable = false)
     private String lastName;
     @Column(nullable = false)
     private int age;
@@ -32,13 +32,11 @@ public class Employee {
             foreignKey = @ForeignKey(name = "department_employee_fk"))
     private Department department;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "employee_project",
-            joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "project_id"))
+    @ManyToMany(mappedBy = "employees", cascade = CascadeType.MERGE)
     private Set<Project> projects = new HashSet<>();
 
     public Employee(){}
+
 
     public Long getId() {
         return id;
@@ -50,6 +48,14 @@ public class Employee {
 
     public void setSSN(String SSN) {
         this.SSN = SSN;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public void addProject(Project project){
+        projects.add(project);
     }
 
     public String getFirstName() {

@@ -10,13 +10,21 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "project_name", nullable = false)
+    @Column(name = "project_name", length = 20, nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "projects")
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable( name = "employee_project",
+            joinColumns = @JoinColumn(referencedColumnName = "id", name = "emp_id"),
+            inverseJoinColumns = @JoinColumn(referencedColumnName = "id", name = "proj_id"))
     private Set<Employee> employees = new HashSet<>();
 
     public Project() {
+    }
+
+    public Project(String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public Long getId() {
@@ -29,6 +37,11 @@ public class Project {
 
     public Set<Employee> getEmployees() {
         return employees;
+    }
+
+    public void addEmployee(Employee employee){
+        employees.add(employee);
+
     }
 
     @Override
